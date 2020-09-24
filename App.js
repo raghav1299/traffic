@@ -12,7 +12,7 @@ export default App =()=> {
   return(
 <NavigationContainer>
   <AuthStack.Navigator>
-  <AuthStack.Screen name="homeScreen" component={homeScreen}/>
+  <AuthStack.Screen name="Traffic App" component={homeScreen}/>
     <AuthStack.Screen name="Screen1" component={Screen1}/>
     <AuthStack.Screen name="Screen2" component={Screen2}/>
 
