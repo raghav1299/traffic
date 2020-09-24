@@ -3,22 +3,27 @@ import {
     View, 
     Text,
     StyleSheet,
-    TouchableOpacity
+    TouchableOpacity, Image
      
 } from 'react-native';
 
 export default function homeScreen(props) {
      
     return(
-
-<View style={{  flex:1,alignItems: 'center',
-    justifyContent: 'center',margin:10}}>
-                
+<View style={{flex:1,backgroundColor:'#f1f0f2',}}>
+    
+<View
+ style={{   alignItems: 'center',
+    justifyContent: 'center'}}>
+        <Image style={{marginBottom:15, }}
+source={require('../Assets/police.png')}
+/>
+        
 <TouchableOpacity
              style={styles.button}
             onPress={()=> props.navigation.navigate('Screen1')} 
             >
-        <Text style={styles.buttonLable}>Screen 1</Text>
+        <Text style={styles.buttonLable}>SEARCH</Text>
 
 </TouchableOpacity>
 
@@ -27,9 +32,9 @@ export default function homeScreen(props) {
          onPress={()=> props.navigation.navigate('Screen2')}
          >
     
-    <Text style={styles.buttonLable}>Screen 2</Text>
+    <Text style={styles.buttonLable}>ADD FINE</Text>
 </TouchableOpacity>
-
+</View>
 </View>
              );           
  }
@@ -39,11 +44,12 @@ export default function homeScreen(props) {
     button:{
       borderWidth:1, 
       height:45,
-      width:"35%" ,
+      width:"85%" ,
       alignContent:"center",
       alignItems: "center",
-      borderRadius: 15,
-      marginBottom:10, 
+      borderRadius: 10,
+      marginBottom:15, 
+      backgroundColor:'coral',
       
       
       
@@ -51,7 +57,7 @@ export default function homeScreen(props) {
   },
   buttonLable:{
       fontSize: 24,
-      color:"black"
+      color:"#ffff"
   }
   });
   
