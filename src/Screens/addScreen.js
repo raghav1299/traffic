@@ -26,13 +26,13 @@ export default function addScreen() {
     
  
     const upload= () => {
-        console.log(name.name,dlno.dlno,vlno,reason,amount)
+        console.log(name,dlno,vlno,reason,amount)
         usersCollection.add({
-            name:name.name,
-            dlno:dlno.dlno,
-            vlno:vlno.vlno,
-            reason:reason.reason,
-            amount:amount.amount
+            name:name,
+            dlno:dlno,
+            vlno:vlno,
+            reason:reason,
+            amount:amount
         })
   .then(() => {
     console.log('User added!');
