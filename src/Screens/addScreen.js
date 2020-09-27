@@ -11,6 +11,37 @@ import {
 
 export default function addScreen() {
 
+    const [name,setName]=useState("");
+    const [dlno,setDL]=useState("");
+    const [vlno,setVL]=useState("");
+    const [reason,setReason]=useState("");
+    const [amount,setAmount]=useState("");
+ 
+    const upload= () => {
+        firebase.firestore(). collection ("finewithdlno").doc(dlno).set({
+          name:name,
+          dlno:dlno,
+          vlno:vlno,
+          reason:reason,
+          amount:amount
+          
+
+            })
+            
+                firebase.firestore(). collection ("finewithname").doc(name).set({
+                  name:name,
+                  dlno:dlno,
+                  vlno:vlno,
+                  reason:reason,
+                  amount:amount
+                  
+        
+                    })
+
+    }
+
+    
+
     return (
 
         <View style={{ flex: 1, flexDirection: "column", backgroundColor: '#f1f0f2', }}>
@@ -24,12 +55,17 @@ export default function addScreen() {
                     style={{ fontSize: 20, margin: 10 }}
                     placeholder="Name"
                     underlineColorAndroid="red"
-
+                
+                    onChangeText={(name) => setName({name})} 
+                    value={name}
                 />
                 <TextInput
                     style={{ fontSize: 20, margin: 10 }}
                     placeholder="Driving Licence No."
                     underlineColorAndroid="red"
+
+                    onChangeText={(dlno) => {setDL({dlno})} }
+                    value={dlno}
 
                 />
                 <TextInput
@@ -37,11 +73,17 @@ export default function addScreen() {
                     placeholder="Vehicle Number"
                     underlineColorAndroid="red"
 
+                    onChangeText={(vlno) => setVL({vlno})} 
+                    value={vlno}
+
                 />
                 <TextInput
                     style={{ fontSize: 20, margin: 10 }}
                     placeholder="Reason"
                     underlineColorAndroid="red"
+
+                    onChangeText={(reason) => setReason({reason})} 
+                    value={reason}
 
                 />
                 <TextInput
@@ -49,6 +91,9 @@ export default function addScreen() {
                     placeholder="Amount"
                     keyboardType="number-pad"
                     underlineColorAndroid="red"
+
+                    onChangeText={(amount) => setAmount({amount})} 
+                    value={amount}
                 />
             </View>
             <View style={{
@@ -57,8 +102,10 @@ export default function addScreen() {
             }}>
                 <TouchableOpacity
                     style={styles.button}
+                    onPress={upload}
                 >
                     <Text style={styles.buttonLable}>ADD FINE</Text>
+                
                 </TouchableOpacity>
             </View>
         </View>
