@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
+import firestore from '@react-native-firebase/firestore';
 
 export default displayScreen = (route) => {
 

@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import RadioForm from 'react-native-simple-radio-button';
-
+import firestore from '@react-native-firebase/firestore';
 
 export default SearchScreen = (props) => {
     const [search, setSearch] = useState();
     const [details, setDetails] = useState();
     const [data, setData] = useState("");
+
+    const usersCollection = firestore().collection('Fine');
+
 
     var srchtype = [
         { id: "Aadhaar Name", label: "Name" },
@@ -15,10 +18,7 @@ export default SearchScreen = (props) => {
     ]
 
     useEffect(() => {
-        const pullData = firebase
-          .firestore()
-          .collection("finewithname")
-          .onSnapshot((querySnapshot) => {
+        const pullData = usersCollection.onSnapshot((querySnapshot) => {
             const mapDoc = querySnapshot.docs.map((doc) => {
                 const firebaseData = doc.data();
                 const data = {
