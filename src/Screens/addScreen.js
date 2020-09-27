@@ -9,34 +9,46 @@ import {
 
 } from 'react-native';
 
+import firestore from '@react-native-firebase/firestore';
+
 export default function addScreen() {
+
+    
 
     const [name,setName]=useState("");
     const [dlno,setDL]=useState("");
     const [vlno,setVL]=useState("");
     const [reason,setReason]=useState("");
     const [amount,setAmount]=useState("");
+
+    const usersCollection = firestore().collection('fine');
+
+    
  
     const upload= () => {
-        firebase.firestore(). collection ("finewithdlno").doc(dlno).set({
-          name:name,
-          dlno:dlno,
-          vlno:vlno,
-          reason:reason,
-          amount:amount
+        console.log(name.name,dlno.dlno,vlno,reason,amount)
+        usersCollection.add({
+            name:name.name,
+            dlno:dlno.dlno,
+            vlno:vlno.vlno,
+            reason:reason.reason,
+            amount:amount.amount
+        })
+  .then(() => {
+    console.log('User added!');
+  }).catch((err)=>console.log(err));
+
+
+        // firestore(). collection ("finewithdlno").doc(dlno).set({
+        //   name:name,
+        //   dlno:dlno,
+        //   vlno:vlno,
+        //   reason:reason,
+        //   amount:amount
           
 
-            })
+            // })
             
-                firebase.firestore(). collection ("finewithname").doc(name).set({
-                  name:name,
-                  dlno:dlno,
-                  vlno:vlno,
-                  reason:reason,
-                  amount:amount
-                  
-        
-                    })
 
     }
 
@@ -56,25 +68,24 @@ export default function addScreen() {
                     placeholder="Name"
                     underlineColorAndroid="red"
                 
-                    onChangeText={(name) => setName({name})} 
-                    value={name}
+                    onChangeText={(name) => setName(name)} 
+                   
                 />
                 <TextInput
                     style={{ fontSize: 20, margin: 10 }}
                     placeholder="Driving Licence No."
                     underlineColorAndroid="red"
 
-                    onChangeText={(dlno) => {setDL({dlno})} }
-                    value={dlno}
-
+                    onChangeText={(dlno) => {setDL(dlno)} }
+                    
                 />
                 <TextInput
                     style={{ fontSize: 20, margin: 10 }}
                     placeholder="Vehicle Number"
                     underlineColorAndroid="red"
 
-                    onChangeText={(vlno) => setVL({vlno})} 
-                    value={vlno}
+                    onChangeText={(vlno) => setVL(vlno)} 
+                    
 
                 />
                 <TextInput
@@ -82,8 +93,8 @@ export default function addScreen() {
                     placeholder="Reason"
                     underlineColorAndroid="red"
 
-                    onChangeText={(reason) => setReason({reason})} 
-                    value={reason}
+                    onChangeText={(reason) => setReason(reason)} 
+                    
 
                 />
                 <TextInput
@@ -92,8 +103,8 @@ export default function addScreen() {
                     keyboardType="number-pad"
                     underlineColorAndroid="red"
 
-                    onChangeText={(amount) => setAmount({amount})} 
-                    value={amount}
+                    onChangeText={(amount) => setAmount(amount)} 
+                    
                 />
             </View>
             <View style={{
