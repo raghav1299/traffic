@@ -7,11 +7,39 @@ import RadioForm from 'react-native-simple-radio-button';
 export default SearchScreen = (props) => {
     const [search, setSearch] = useState();
     const [details, setDetails] = useState();
+    const [data, setData] = useState("");
 
     var srchtype = [
-        { id: "Aadhaar Name", label: "Aadhaar Name" },
+        { id: "Aadhaar Name", label: "Name" },
         { id: "DL Number", label: "DL Number" }
     ]
+
+    useEffect(() => {
+        const pullData = firebase
+          .firestore()
+          .collection("finewithname")
+          .onSnapshot((querySnapshot) => {
+            const mapDoc = querySnapshot.docs.map((doc) => {
+                const firebaseData = doc.data();
+                const data = {
+                    name:name,
+                    dlno:dlno,
+                    vlno:vlno,
+                    reason:reason,
+                    amount:amount,
+
+                  ...firebaseData,
+                };
+              
+                console.log(data);
+            });
+            setData(data);
+          });
+        return () => pullData();
+    
+      }, []);
+
+
 
     return (
         <View style={styles.view}>
@@ -42,7 +70,8 @@ export default SearchScreen = (props) => {
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
-                    props.navigation.navigate("displayScreen")
+                    props.navigation.navigate("displayScreen",{PassingData:data})
+
                 }}
             >
                 <Text style={{ fontSize: 30, textAlign: "center", color: '#f1f0f2' }}>
