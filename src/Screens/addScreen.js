@@ -10,53 +10,47 @@ import {
 } from 'react-native';
 
 import firestore from '@react-native-firebase/firestore';
+import { PropTypes } from 'mobx-react';
 
-export default function addScreen() {
+export default function addScreen(props) {
 
-    
 
-    const [name,setName]=useState("");
-    const [dlno,setDL]=useState("");
-    const [vlno,setVL]=useState("");
-    const [reason,setReason]=useState("");
-    const [amount,setAmount]=useState("");
+
+    const [name, setName] = useState("");
+    const [dlno, setDL] = useState("");
+    const [vlno, setVL] = useState("");
+    const [reason, setReason] = useState("");
+    const [amount, setAmount] = useState("");
 
     const usersCollection = firestore().collection('fine');
 
-    
- 
-    const upload= () => {
-        console.log(name,dlno,vlno,reason,amount)
-        usersCollection.add({
-            name:name,
-            dlno:dlno,
-            vlno:vlno,
-            reason:reason,
-            amount:amount
-        })
-  .then(() => {
-    console.log('User added!');
-  }).catch((err)=>console.log(err));
 
 
-        // firestore(). collection ("finewithdlno").doc(dlno).set({
-        //   name:name,
-        //   dlno:dlno,
-        //   vlno:vlno,
-        //   reason:reason,
-        //   amount:amount
-          
-
-            // })
-            
-
+    const upload = () => {
+        if (name !== '' && dlno !== '' && vlno !== '' && reason !== '' && amount !== "") {
+            console.log(name, dlno, vlno, reason, amount)
+            usersCollection.add({
+                name: name,
+                dlno: dlno,
+                vlno: vlno,
+                reason: reason,
+                amount: amount
+            }).then(() => {
+                alert("Fine Successfully added....")
+                console.log('User added!');
+                props.navigation.replace('Traffic App')
+            }).catch((err) => console.log(err));
+        }
+        else {
+            alert("enter values in all the fields")
+        }
     }
 
-    
+
 
     return (
 
-        <View style={{ flex: 1, flexDirection: "column", backgroundColor: '#f1f0f2', }}>
+        <View style={{ flex: 1, flexDirection: "column", backgroundColor: '#f1f0f2', justifyContent: "center" }}>
 
 
             <View style={{
@@ -67,25 +61,24 @@ export default function addScreen() {
                     style={{ fontSize: 20, margin: 10 }}
                     placeholder="Name"
                     underlineColorAndroid="red"
-                
-                    onChangeText={(name) => setName(name)} 
-                   
+                    onChangeText={(name) => setName(name)}
+
                 />
                 <TextInput
                     style={{ fontSize: 20, margin: 10 }}
                     placeholder="Driving Licence No."
                     underlineColorAndroid="red"
 
-                    onChangeText={(dlno) => {setDL(dlno)} }
-                    
+                    onChangeText={(dlno) => { setDL(dlno) }}
+
                 />
                 <TextInput
                     style={{ fontSize: 20, margin: 10 }}
                     placeholder="Vehicle Number"
                     underlineColorAndroid="red"
 
-                    onChangeText={(vlno) => setVL(vlno)} 
-                    
+                    onChangeText={(vlno) => setVL(vlno)}
+
 
                 />
                 <TextInput
@@ -93,8 +86,8 @@ export default function addScreen() {
                     placeholder="Reason"
                     underlineColorAndroid="red"
 
-                    onChangeText={(reason) => setReason(reason)} 
-                    
+                    onChangeText={(reason) => setReason(reason)}
+
 
                 />
                 <TextInput
@@ -103,8 +96,8 @@ export default function addScreen() {
                     keyboardType="number-pad"
                     underlineColorAndroid="red"
 
-                    onChangeText={(amount) => setAmount(amount)} 
-                    
+                    onChangeText={(amount) => setAmount(amount)}
+
                 />
             </View>
             <View style={{
@@ -116,7 +109,7 @@ export default function addScreen() {
                     onPress={upload}
                 >
                     <Text style={styles.buttonLable}>ADD FINE</Text>
-                
+
                 </TouchableOpacity>
             </View>
         </View>
