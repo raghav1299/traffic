@@ -17,38 +17,38 @@ export default SearchScreen = (props) => {
     return (
         <View style={styles.view}>
             <View style={{ marginTop: 200, margin: 20, backgroundColor: "#ffffff", borderRadius: 20 }}>
-                <Text style={styles.textinput1}>
-                    Search By
+                <View style={{ flexDirection: "row" }}>
+                    <Text style={styles.textinput1}>
+                        Search By:
                 </Text>
-                <RadioForm
-                    style={{ marginLeft: 10, marginBottom: -10 }}
-                    radio_props={srchtype}
-                    selectedButtonColor={"coral"}
-                    buttonColor={"#777777"}
-                    labelColor={"#777777"}
-                    selectedLabelColor={"#777777"}
-                    buttonSize={20}
-                    initial={"name"}
-                    onPress={(val) => {
-                        Store.filtertype=val
-                        console.log("sf",Store.filtertype)
-                    }}
-                />
+                    <RadioForm
+                        style={{ marginTop: 30, flexDirection: 'row' }}
+                        radio_props={srchtype}
+                        selectedButtonColor={"coral"}
+                        buttonColor={"#777777"}
+                        labelColor={"#777777"}
+                        selectedLabelColor={"#777777"}
+                        buttonSize={15}
+                        initial={"name"}
+                        onPress={(val) => {
+                            Store.filtertype = val
+                            console.log("sf", Store.filtertype)
+                        }}
+                    />
+                </View>
                 <TextInput
                     placeholder='Enter details of selected category'
                     style={styles.textinput2}
                     onChangeText={(res) => {
-                        Store.filterinfo =res
-                        console.log('asf',Store.filterinfo)
+                        Store.filterinfo = res
+                        console.log('asf', Store.filterinfo)
                     }}
                 />
             </View>
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
-                    props.navigation.navigate("displayScreen",
-                        // {PassingData:data}
-                    )
+                    props.navigation.navigate("displayScreen")
 
                 }}
             >
@@ -70,7 +70,8 @@ const styles = StyleSheet.create({
         color: 'grey'
     },
     view: {
-        backgroundColor: '#f1f0f2'
+        backgroundColor: '#f1f0f2',
+        justifyContent: "center"
     },
     textinput2: {
         marginBottom: 30,

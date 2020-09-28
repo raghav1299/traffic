@@ -10,7 +10,7 @@ import {
 export default function homeScreen(props) {
 
     return (
-        <View style={{ flex: 1, backgroundColor: '#f1f0f2', }}>
+        <View style={{ flex: 1, backgroundColor: '#f1f0f2', justifyContent: 'center' }}>
 
             <View
                 style={{
@@ -52,10 +52,12 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginBottom: 15,
         backgroundColor: 'coral',
+        justifyContent: "center"
     },
     buttonLable: {
         fontSize: 24,
-        color: "#ffff"
+        color: "#ffff",
+        alignSelf: "center"
     }
 });
 
