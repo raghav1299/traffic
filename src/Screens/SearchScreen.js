@@ -1,45 +1,18 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import RadioForm from 'react-native-simple-radio-button';
 import firestore from '@react-native-firebase/firestore';
+import Store from './Store'
+
 
 export default SearchScreen = (props) => {
-    const [search, setSearch] = useState();
-    const [details, setDetails] = useState();
-    const [data, setData] = useState("");
-
-    const usersCollection = firestore().collection('Fine');
-
-
+    const [search, setSearch] = useState("")
+    const [amt, setAmt] = useState([]);
     var srchtype = [
-        { id: "Aadhaar Name", label: "Name" },
-        { id: "DL Number", label: "DL Number" }
+        { value: "name", label: "Name" },
+        { value: 'dlno', label: "DL Number" }
     ]
-
-    useEffect(() => {
-        const pullData = usersCollection.onSnapshot((querySnapshot) => {
-            const mapDoc = querySnapshot.docs.map((doc) => {
-                const firebaseData = doc.data();
-                const data = {
-                    name:name,
-                    dlno:dlno,
-                    vlno:vlno,
-                    reason:reason,
-                    amount:amount,
-
-                  ...firebaseData,
-                };
-              
-                console.log(data);
-            });
-            setData(data);
-          });
-        return () => pullData();
-    
-      }, []);
-
-
 
     return (
         <View style={styles.view}>
@@ -55,22 +28,27 @@ export default SearchScreen = (props) => {
                     labelColor={"#777777"}
                     selectedLabelColor={"#777777"}
                     buttonSize={20}
+                    initial={"name"}
                     onPress={(val) => {
-                        setSearch(val)
+                        Store.filtertype=val
+                        console.log("sf",Store.filtertype)
                     }}
                 />
                 <TextInput
                     placeholder='Enter details of selected category'
                     style={styles.textinput2}
                     onChangeText={(res) => {
-                        setDetails(res)
+                        Store.filterinfo =res
+                        console.log('asf',Store.filterinfo)
                     }}
                 />
             </View>
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
-                    props.navigation.navigate("displayScreen",{PassingData:data})
+                    props.navigation.navigate("displayScreen",
+                        // {PassingData:data}
+                    )
 
                 }}
             >
@@ -82,13 +60,14 @@ export default SearchScreen = (props) => {
     )
 }
 
+
 const styles = StyleSheet.create({
     textinput1: {
         marginTop: 30,
         // borderBottomWidth: 1,
         margin: 10,
         borderColor: 'lightgrey',
-        color:'grey'
+        color: 'grey'
     },
     view: {
         backgroundColor: '#f1f0f2'
