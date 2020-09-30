@@ -1,13 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     View,
     Text,
     StyleSheet,
-    TouchableOpacity, Image
+    TouchableOpacity, Image, Alert
 
 } from 'react-native';
 
+import messaging from '@react-native-firebase/messaging';
+
+
+
+
 export default function homeScreen(props) {
+
+    useEffect(() => {
+        requestUserPermission()
+        const unsubscribe = messaging().onMessage(async remoteMessage => {
+            Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+        });
+
+        return unsubscribe;
+    }, [])
+    async function requestUserPermission() {
+        const authStatus = await messaging().requestPermission();
+        const enabled =
+            authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+            authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+        if (enabled) {
+            console.log('Authorization status:', authStatus);
+        }
+    }
 
     return (
         <View style={{ flex: 1, backgroundColor: '#f1f0f2', justifyContent: 'center' }}>
